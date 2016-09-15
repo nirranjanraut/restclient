@@ -4,9 +4,20 @@ HOW TO USE GUID.
 1) Add dependancy in your app/build.gradle file like below
 --------------
 
+      android {
+            ....
+            packagingOptions {
+                  exclude 'META-INF/DEPENDENCIES'
+                  exclude 'META-INF/NOTICE'
+                  exclude 'META-INF/LICENSE'
+                  exclude 'META-INF/LICENSE.txt'
+                  exclude 'META-INF/NOTICE.txt'
+            }
+      }
+
       dependencies {
-        ....
-        compile 'in.gauriinfotech.mylibraries:rest-client:1.0.0'
+            ....
+            compile 'in.gauriinfotech.mylibraries:rest-client:1.0.0'
       }
 
 2) Upload image using below code.
