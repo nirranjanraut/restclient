@@ -20,7 +20,7 @@ HOW TO USE GUID.
             compile 'in.gauriinfotech:rest-client:1.0.1'
       }
 
-2) Upload image using below code.
+2) Upload file using below code.
 --------------
 
         File file = new File("/path/to/file");
