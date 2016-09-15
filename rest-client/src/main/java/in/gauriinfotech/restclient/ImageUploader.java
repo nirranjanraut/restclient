@@ -36,7 +36,7 @@ public class ImageUploader extends Request<String> {
 
     private MultipartEntityBuilder mBuilder = MultipartEntityBuilder.create();
     private final Response.Listener<String> mListener;
-    private final File yourImageFile;
+    private final File imageFile;
     protected Map<String, String> headers;
     private static final String tag = "ImageUploader";
     private Map<String, String> params;
@@ -44,7 +44,7 @@ public class ImageUploader extends Request<String> {
     public ImageUploader(String url, Map<String, String> params, Response.ErrorListener errorListener, Response.Listener<String> listener, File imageFile)   {
         super(Method.POST, url, errorListener);
         mListener = listener;
-        yourImageFile = imageFile;
+        this.imageFile = imageFile;
         this.params = params;
         addImageEntity();
         setRetryPolicy(new DefaultRetryPolicy(
@@ -57,7 +57,7 @@ public class ImageUploader extends Request<String> {
                          Response.Listener<String> listener, File imageFile, Map<String, String> headers)   {
         super(Method.POST, url, errorListener);
         mListener = listener;
-        yourImageFile = imageFile;
+        this.imageFile = imageFile;
         this.params = params;
         this.headers = headers;
         addImageEntity();
@@ -82,7 +82,7 @@ public class ImageUploader extends Request<String> {
         for(String key : params.keySet()) {
             mBuilder.addPart(key, new StringBody(params.get(key), ContentType.TEXT_PLAIN));
         }
-        mBuilder.addBinaryBody("file", yourImageFile, ContentType.create("image/jpeg"), yourImageFile.getName());
+        mBuilder.addBinaryBody("file", imageFile, ContentType.create("image/jpeg"), imageFile.getName());
         mBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         mBuilder.setLaxMode().setBoundary("xx").setCharset(Charset.forName("UTF-8"));
     }
