@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'rest-client'
+
+    publishedGroupId = 'in.gauriinfotech.mylibraries'
+    libraryName = 'RestClient'
+    artifact = 'rest-client'
+
+    libraryDescription = 'A library to make rest calls with image upload functionality'
+
+    siteUrl = 'https://github.com/nirranjanraut/RestClient'
+    gitUrl = 'https://github.com/nirranjanraut/restclient.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'nirranjanraut'
+    developerName = 'Niranjan Raut'
+    developerEmail = 'nirranjan.raut@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -22,4 +46,13 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'org.apache.httpcomponents:httpcore:4.4.5'
+    compile('org.apache.httpcomponents:httpmime:4.3.6') {
+        exclude module: 'httpclient'
+    }
 }
+
+apply from: '/SOFTWARES/ANDROID_PROJECTS/GIT_HUB_REPO/SCRIPTS/installv1.gradle'
+apply from: '/SOFTWARES/ANDROID_PROJECTS/GIT_HUB_REPO/SCRIPTS/bintrayv1.gradle'
