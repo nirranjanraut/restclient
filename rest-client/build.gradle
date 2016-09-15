@@ -4,7 +4,7 @@ ext {
     bintrayRepo = 'Rest'
     bintrayName = 'rest-client'
 
-    publishedGroupId = 'in.gauriinfotech.mylibraries'
+    publishedGroupId = 'in.gauriinfotech'
     libraryName = 'RestClient'
     artifact = 'rest-client'
 
@@ -47,7 +47,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.volley:volley:1.0.0'
-    compile 'com.google.code.gson:gson:2.7'
     compile 'org.apache.httpcomponents:httpcore:4.4.5'
     compile('org.apache.httpcomponents:httpmime:4.3.6') {
         exclude module: 'httpclient'

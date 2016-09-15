@@ -1,5 +1,13 @@
 package in.gauriinfotech.restclient;
 
+/**
+ * Created by NiRRaNjAN on 15/09/16.
+ * Contact email    :   nirranjan.raut@gmail.com
+ * Facebook         :   https://www.facebook.com/NiRRaNjAN.RauT
+ * Stackoverflow    :   http://stackoverflow.com/users/1911941/elite
+ * Blogs            :   http://technoscripts.com
+ */
+
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -10,7 +18,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.google.gson.Gson;
 
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -25,25 +32,34 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by NiRRaNjAN on 15/09/16.
- */
-public class ImageUploader<T> extends Request<T> {
+public class ImageUploader extends Request<String> {
 
     private MultipartEntityBuilder mBuilder = MultipartEntityBuilder.create();
-    private final Response.Listener<T> mListener;
+    private final Response.Listener<String> mListener;
     private final File yourImageFile;
     protected Map<String, String> headers;
-    private String tag = "ImageUploader";
+    private static final String tag = "ImageUploader";
     private Map<String, String> params;
-    private Class<T> type;
 
-    public ImageUploader(String url, Map<String, String> params, Class<T> type, Response.ErrorListener errorListener, Response.Listener<T> listener, File imageFile)   {
+    public ImageUploader(String url, Map<String, String> params, Response.ErrorListener errorListener, Response.Listener<String> listener, File imageFile)   {
         super(Method.POST, url, errorListener);
         mListener = listener;
         yourImageFile = imageFile;
-        this.type = type;
         this.params = params;
+        addImageEntity();
+        setRetryPolicy(new DefaultRetryPolicy(
+                20 * 1000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    }
+
+    public ImageUploader(String url, Map<String, String> params, Response.ErrorListener errorListener,
+                         Response.Listener<String> listener, File imageFile, Map<String, String> headers)   {
+        super(Method.POST, url, errorListener);
+        mListener = listener;
+        yourImageFile = imageFile;
+        this.params = params;
+        this.headers = headers;
         addImageEntity();
         setRetryPolicy(new DefaultRetryPolicy(
                 20 * 1000,
@@ -56,7 +72,7 @@ public class ImageUploader<T> extends Request<T> {
         Map<String, String> headers = super.getHeaders();
         if (headers == null
                 || headers.equals(Collections.emptyMap())) {
-            headers = new HashMap<String, String>();
+            headers = new HashMap<>();
         }
         headers.put("Accept", "text/html");
         return headers;
@@ -73,8 +89,7 @@ public class ImageUploader<T> extends Request<T> {
 
     @Override
     public String getBodyContentType()   {
-        String content = mBuilder.build().getContentType().getValue();
-        return content;
+        return mBuilder.build().getContentType().getValue();
     }
 
     @Override
@@ -90,10 +105,10 @@ public class ImageUploader<T> extends Request<T> {
     }
 
     @Override
-    protected Response<T> parseNetworkResponse(NetworkResponse response) {
+    protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
             String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(new Gson().fromJson(json, type), HttpHeaderParser.parseCacheHeaders(response));
+            return Response.success(json, HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception ex) {
             Log.e(tag, Log.getStackTraceString(ex));
             return Response.error(new ParseError(ex));
@@ -101,7 +116,7 @@ public class ImageUploader<T> extends Request<T> {
     }
 
     @Override
-    protected void deliverResponse(T response) {
+    protected void deliverResponse(String response) {
         mListener.onResponse(response);
     }
 }
