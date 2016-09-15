@@ -17,7 +17,7 @@ HOW TO USE GUID.
 
       dependencies {
             ....
-            compile 'in.gauriinfotech.mylibraries:rest-client:1.0.0'
+            compile 'in.gauriinfotech:rest-client:1.0.1'
       }
 
 2) Upload image using below code.
@@ -27,41 +27,22 @@ HOW TO USE GUID.
         Map<String, String> params = new HashMap<>();
         params.put("user", "nirranjan"); // add here request parameters if any
         // display progress dialog if needed
-        ImageUploader<OutputClass> uploader = new ImageUploader<>(SITE, params, OutputClass.class, new Response.ErrorListener() {
+        ImageUploader uploader = new ImageUploader("www.example.com/upload.php", params, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "ERROR :: " + Log.getStackTraceString(error));
+                // dismiss dialog here if displaying
             }
-        }, new Response.Listener<OutputClass>() {
+        }, new Response.Listener<String>() {
             @Override
-            public void onResponse(OutputClass response) {
-                Log.e(TAG, "SUCCESS ::  " + response.toString());
+            public void onResponse(String response) {
+                Log.e(TAG, "SUCCESS ::  " + response);
+                // dismiss dialog here if displaying
             }
         }, file); // file is Object of file which you want to upload to server.
         uploader.setTag("myTag");
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(uploader);
+        requestQueue.add(uploader); // file is uploaded on server using parameter name 'file'
 
-3) OutputClass is nothing but the output from server.
---------------
-
-Consider server returning output as
-
-    {
-      "status":"success"
-      "name":"fileName"
-    }
-
-then OutputClass should look like below.
-
-    public class OutputClass {
-      String status;
-
-      public String getStatus() {
-        return status;
-      }
-
-    }
-    
 
 If you have any doubts contact on nirranjan.raut@gmail.com
