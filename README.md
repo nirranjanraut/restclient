@@ -17,13 +17,13 @@ HOW TO USE GUID.
 
       dependencies {
             ....
-            compile 'in.gauriinfotech:rest-client:1.0.1'
+            compile 'in.gauriinfotech:rest-client:1.0.0'
       }
 
-2) Upload image using below code.
+2) Upload File using below code.
 --------------
 
-        File file = new File("/path/to/file");
+        File file = new File("/path/to/file");// make sure your app has READ_EXTERNAL_STORAGE permission granted.
         Map<String, String> params = new HashMap<>();
         params.put("user", "nirranjan"); // add here request parameters if any
         // display progress dialog if needed
