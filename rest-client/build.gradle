@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/nirranjanraut/RestClient'
     gitUrl = 'https://github.com/nirranjanraut/restclient.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'nirranjanraut'
     developerName = 'Niranjan Raut'

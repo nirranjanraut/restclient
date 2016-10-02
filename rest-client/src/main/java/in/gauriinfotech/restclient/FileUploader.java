@@ -32,16 +32,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImageUploader extends Request<String> {
+public class FileUploader extends Request<String> {
 
     private MultipartEntityBuilder mBuilder = MultipartEntityBuilder.create();
     private final Response.Listener<String> mListener;
     private final File imageFile;
     protected Map<String, String> headers;
-    private static final String tag = "ImageUploader";
+    private static final String tag = "FileUploader";
     private Map<String, String> params;
 
-    public ImageUploader(String url, Map<String, String> params, Response.ErrorListener errorListener, Response.Listener<String> listener, File imageFile)   {
+    public FileUploader(String url, Map<String, String> params, Response.ErrorListener errorListener, Response.Listener<String> listener, File imageFile)   {
         super(Method.POST, url, errorListener);
         mListener = listener;
         this.imageFile = imageFile;
@@ -53,8 +53,8 @@ public class ImageUploader extends Request<String> {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
-    public ImageUploader(String url, Map<String, String> params, Response.ErrorListener errorListener,
-                         Response.Listener<String> listener, File imageFile, Map<String, String> headers)   {
+    public FileUploader(String url, Map<String, String> params, Response.ErrorListener errorListener,
+                        Response.Listener<String> listener, File imageFile, Map<String, String> headers)   {
         super(Method.POST, url, errorListener);
         mListener = listener;
         this.imageFile = imageFile;

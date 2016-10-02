@@ -61,6 +61,14 @@ public class CustomRequest extends Request<String> {
         return new CustomRequest(url, method, params, headers, responseListener, errorListener);
     }
 
+    public static CustomRequest getInstance(String url, int method, Map<String, String> params, Map<String, String> headers,
+                                            Response.Listener<String> responseListener, Response.ErrorListener errorListener) {
+        if(method == Method.GET && params != null) {
+            url += getQueryUrl(params, "/", "=", "&");
+        }
+        return new CustomRequest(url, method, params, headers, responseListener, errorListener);
+    }
+
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
